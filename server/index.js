@@ -59,16 +59,39 @@ app.get('^/*', (req, res, next) => {
         }
         console.log('===REQ', req)
 
-        // inject meta tags
-        htmlData = htmlData.replace(
-            "<title>React App</title>",
-            `<title>Tribel Dynamic Meta</title>`
-        )
-            .replace('__META_OG_TITLE__', "I recommend Tribel, a new pro-democracy alternative to Facebook and Twitter.")
-            .replace('__META_OG_DESCRIPTION__', "Join Tribel social network today. It’s free and always will be.")
-            .replace('__META_DESCRIPTION__', "Join Tribel social network today. It’s free and always will be.")
-            .replace('__META_OG_IMAGE__', "https://tribelcdn.com/public/uploads/post_images/Tribel_logo.png")
-        return res.send(htmlData);
+            // var fetchedData= await fetch('https://jsonplaceholder.typicode.com/todos/1')
+            // .then(response => response.json())
+            // .then(json => console.log(json))
+
+            // var fetchedData = ''
+
+            (async () => {
+                const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+                const body = await response.json();
+                console.log("===body", body);
+                // inject meta tags
+                htmlData = htmlData.replace(
+                    "<title>React App</title>",
+                    `<title>${body.title}</title>`
+                )
+                    .replace('__META_OG_TITLE__', `${body.title}`)
+                    .replace('__META_OG_DESCRIPTION__', "Join Tribel social network today. It’s free and always will be.")
+                    .replace('__META_DESCRIPTION__', "Join Tribel social network today. It’s free and always will be.")
+                    .replace('__META_OG_IMAGE__', "https://tribelcdn.com/public/uploads/post_images/Tribel_logo.png")
+                return res.send(htmlData);
+            })();
+
+
+        // // inject meta tags
+        // htmlData = htmlData.replace(
+        //     "<title>React App</title>",
+        //     `<title>Tribel Dynamic Meta</title>`
+        // )
+        //     .replace('__META_OG_TITLE__', "I recommend Tribel, a new pro-democracy alternative to Facebook and Twitter.")
+        //     .replace('__META_OG_DESCRIPTION__', "Join Tribel social network today. It’s free and always will be.")
+        //     .replace('__META_DESCRIPTION__', "Join Tribel social network today. It’s free and always will be.")
+        //     .replace('__META_OG_IMAGE__', "https://tribelcdn.com/public/uploads/post_images/Tribel_logo.png")
+        // return res.send(htmlData);
     });
 });
 
