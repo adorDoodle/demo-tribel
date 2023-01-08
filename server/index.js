@@ -103,7 +103,7 @@ app.get('^/*', (req, res, next) => {
         }
 
         apiCall()
-
+        res.redirect('https://www.tribel.com/posts/fb9b1410-8bfb-11ed-9766-658578570228')
 
         // fetch('https://jsonplaceholder.typicode.com/todos/1')
         //     .then((response) => response.json())
